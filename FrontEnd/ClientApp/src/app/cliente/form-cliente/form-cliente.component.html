@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Formulario de Cliente</h1>
+  <form [formGroup]="formGroup" (ngSubmit)="save()">
+    <div class="form-row">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="nombre">Nombre del cliente</label>
+            <input type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ej: MM">
+            </div>
+          </div>
+        </div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid">
+      Aceptar
+    </button>
+  </form>
+</div>
