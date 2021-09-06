@@ -18,7 +18,7 @@ namespace BackEnd.Cuenta.Aplicacion.Service
         }
         public CrearCuentaResponse Ejecutar(CrearCuentaRequest request)
         {
-            var cuenta = _unitOfWork.CuentaServiceRepository.FindFirstOrDefault(t => t.Id == request.id || t.NumeroCuenta == request.NumeroCuenta || t.Saldo== request.Saldo || t.IdCliente == request.IdCliente );
+            var cuenta = _unitOfWork.CuentaServiceRepository.FindFirstOrDefault(t => t.Id == request.id || t.NumeroCuenta == request.NumeroCuenta);
             if (cuenta != null)
             {
                 return new CrearCuentaResponse($"Cuenta ya existe");
@@ -29,7 +29,7 @@ namespace BackEnd.Cuenta.Aplicacion.Service
                 string ListaErrors = "Errores: " + string.Join(",", errors);
                 return new CrearCuentaResponse(ListaErrors);
             }
-            Dominio.Cuenta newCuenta = new Dominio.Cuenta(request.NumeroCuenta.ToUpper(), request.Saldo, request.IdCliente);
+            Dominio.Cuenta newCuenta = new Dominio.Cuenta(request.NumeroCuenta, request.Saldo, request.IdCliente);
             _unitOfWork.CuentaServiceRepository.Add(newCuenta);
             _unitOfWork.Commit();
             return new CrearCuentaResponse($"Cliente Creado Exitosamente");

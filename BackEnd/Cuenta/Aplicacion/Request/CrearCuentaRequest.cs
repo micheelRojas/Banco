@@ -10,7 +10,7 @@ namespace BackEnd.Cuenta.Aplicacion.Request
     {
         public int id { get; set; }
         public string NumeroCuenta { get; set; }
-        public Double Saldo { get; set; }
+        public Double Saldo { get=> 0; }
         public int IdCliente { get; set; }
         public IReadOnlyList<string> CanCrear(CrearCuentaRequest cuenta)
         {
