@@ -32,7 +32,7 @@ namespace BackEnd.Cuenta.Aplicacion.Service
             Dominio.Cuenta newCuenta = new Dominio.Cuenta(request.NumeroCuenta, request.Saldo, request.IdCliente);
             _unitOfWork.CuentaServiceRepository.Add(newCuenta);
             _unitOfWork.Commit();
-            return new CrearCuentaResponse($"Cliente Creado Exitosamente");
+            return new CrearCuentaResponse($"Cuenta Creado Exitosamente");
         }
     }
 }

@@ -20,6 +20,10 @@ import { ClienteService } from './cliente/cliente.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CuentaComponent } from './cuenta/cuenta.component';
+import { FormCuentaComponent } from './cuenta/form-cuenta/form-cuenta.component';
+import { ListCuentaComponent } from './cuenta/list-cuenta/list-cuenta.component';
+import { CuentaService } from './cuenta/cuenta.service';
 
 
 @NgModule({
@@ -31,7 +35,10 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
     FetchDataComponent,
     ClienteComponent,
     FormClienteComponent,
-    ListClienteComponent
+    ListClienteComponent,
+    CuentaComponent,
+    FormCuentaComponent,
+    ListCuentaComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,6 +51,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'registrar-cliente', component: FormClienteComponent },
       { path: 'lista-cliente', component: ClienteComponent },
+      { path: 'registrar-cuenta', component: FormCuentaComponent },
+      { path: 'lista-cuenta', component: CuentaComponent },
 
     ],),
     BrowserAnimationsModule,
@@ -51,7 +60,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
     MatTableModule
   ],
   //Aquí en providers se agregan todos los services de angular
-  providers: [ClienteService],
+  providers: [ClienteService, CuentaService],
   bootstrap: [AppComponent],
  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

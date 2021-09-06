@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Formulario de Cuenta</h1>
+  <form [formGroup]="formGroup" (ngSubmit)="save()">
+    <div class="form-row">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="numeroCuenta">Numero Cuenta</label>
+          <input type="text" class="form-control" formControlName="numeroCuenta" id="numeroCuenta" placeholder="Ej: 1065">
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-5">
+      <label for="idCliente">Cliente</label>
+      <select formControlName="idCliente" class="form-control" id="idCliente">
+        <option value="">Seleccione un Cliente</option>
+        <option value="{{dato.id}}" *ngFor="let dato of ListaClientes">
+          {{dato.nombre}}
+        </option>
+      </select>
+    </div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid">
+      Aceptar
+    </button>
+  </form>
+</div>
