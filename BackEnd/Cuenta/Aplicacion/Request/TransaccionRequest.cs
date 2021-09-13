@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Cuenta.Aplicacion.Request
 {
-    public class ActualizarCuentaRequest
+   public abstract class TransaccionRequest
     {
         public int id { get; set; }
-        public Double Saldo { get; set; }
-
+        public double Saldo { get; set; }
+        public double Valor { get; set; }
+        public abstract Double Transaccion(Double saldo,Double valor);
     }
-    public class ActualizarCuentaResponse
+    public class TransaccionResponse
     {
-        public ActualizarCuentaResponse(string message)
+        public TransaccionResponse(string message)
         {
             Message = message;
         }
@@ -22,7 +23,7 @@ namespace BackEnd.Cuenta.Aplicacion.Request
         public string Message { get; set; }
         public bool isOk()
         {
-            return this.Message.Equals("Cuenta Actualizada Exitosamente");
+            return this.Message.Equals("Transaccion Exitosamente");
         }
     }
 }

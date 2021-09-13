@@ -19,6 +19,8 @@ namespace FrontEnd.Controllers
     {
         private readonly BancoContext _context;
         private CrearCuentaService _service;
+        private DepositoService _depositoService;
+        private RetiroService _retiroService;
         private UnitOfWork _unitOfWork;
         public CuentaController(BancoContext context)
         {
@@ -60,6 +62,30 @@ namespace FrontEnd.Controllers
             {
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetCuenta", new { id = cuenta.id }, cuenta);
+            }
+            return BadRequest(rta.Message);
+        }
+        [HttpPut("PutDeposito/{id}")]
+        public async Task<IActionResult> PutDeposito( [FromBody] DepositoRequest cuenta)
+        {
+            _depositoService = new DepositoService (_unitOfWork);
+            var rta = _depositoService.Ejecutar(cuenta);
+            if (rta.isOk())
+            {
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetMensualidad", new { id = cuenta.id }, cuenta);
+            }
+            return BadRequest(rta.Message);
+        }
+        [HttpPut("PutRetiro/{id}")]
+        public async Task<IActionResult> PutRetiro([FromBody] RetiroRequest cuenta)
+        {
+            _retiroService = new RetiroService(_unitOfWork);
+            var rta = _retiroService.Ejecutar(cuenta);
+            if (rta.isOk())
+            {
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetMensualidad", new { id = cuenta.id }, cuenta);
             }
             return BadRequest(rta.Message);
         }
