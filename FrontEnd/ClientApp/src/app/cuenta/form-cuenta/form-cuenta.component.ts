@@ -29,7 +29,7 @@ export class FormCuentaComponent implements OnInit {
     let cuenta: ICuenta = Object.assign({}, this.formGroup.value);
     console.table(cuenta); //ver grado por consola
     if (this.formGroup.valid) {
-      this.cuentaService.createCliente(cuenta)
+      this.cuentaService.createCuenta(cuenta)
         .subscribe(cliente => this.goBack(),
           error => console.log('Error'));//this.mensaje.mensajeAlertaError('Error', error.error.toString()));
     } else {

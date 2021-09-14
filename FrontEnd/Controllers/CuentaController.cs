@@ -28,9 +28,10 @@ namespace FrontEnd.Controllers
             _unitOfWork = new UnitOfWork(_context);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCuenta([FromRoute] int id)
+        public async Task<IActionResult> GetCuenta([FromBody] int id)
         {
-            Cuenta cuenta = await _context.Cuenta.SingleOrDefaultAsync(t => t.Id == id);
+            string numCuenta = id.ToString();
+            Cuenta cuenta = await _context.Cuenta.SingleOrDefaultAsync(t => t.NumeroCuenta == numCuenta);
             if (cuenta == null)
                 return NotFound();
             return Ok(cuenta);
@@ -53,6 +54,25 @@ namespace FrontEnd.Controllers
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(result, Newtonsoft.Json.Formatting.Indented);
             return result;
         }
+        [HttpGet("GetCuentaBuscada/{id}")]
+        public object GetCuentaBuscada([FromRoute] int id)
+        {
+            string numCuenta = id.ToString();
+            var result = (from c in _context.Set<Cuenta>()
+                          join cl in _context.Set<Cliente>()
+                          on c.IdCliente equals cl.Id
+                          where c.NumeroCuenta.Equals(numCuenta)
+                          select new
+                          {
+                              id = c.Id,
+                              numeroCuenta = c.NumeroCuenta,
+                              saldo = c.Saldo,
+                              cliente = cl.Nombre,
+
+                          }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(result, Newtonsoft.Json.Formatting.Indented);
+            return result;
+        }
         [HttpPost]
         public async Task<IActionResult> CreateCuenta([FromBody] CrearCuentaRequest cuenta)
         {
@@ -65,19 +85,20 @@ namespace FrontEnd.Controllers
             }
             return BadRequest(rta.Message);
         }
-        [HttpPut("PutDeposito/{id}")]
-        public async Task<IActionResult> PutDeposito( [FromBody] DepositoRequest cuenta)
+        [HttpPut("PutDeposito/{numeroCuenta}")]
+        public async Task<IActionResult> PutDeposito([FromRoute] string numeroCuenta, [FromBody] DepositoRequest cuenta)
         {
             _depositoService = new DepositoService (_unitOfWork);
+          double n=  cuenta.Valor;
             var rta = _depositoService.Ejecutar(cuenta);
             if (rta.isOk())
             {
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetMensualidad", new { id = cuenta.id }, cuenta);
+                return CreatedAtAction("GetCuenta", new { numeroCuenta = cuenta.NumeroCuenta }, cuenta);
             }
             return BadRequest(rta.Message);
         }
-        [HttpPut("PutRetiro/{id}")]
+        [HttpPut("PutRetiro/{numeroCuenta}")]
         public async Task<IActionResult> PutRetiro([FromBody] RetiroRequest cuenta)
         {
             _retiroService = new RetiroService(_unitOfWork);
@@ -85,7 +106,7 @@ namespace FrontEnd.Controllers
             if (rta.isOk())
             {
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetMensualidad", new { id = cuenta.id }, cuenta);
+                return CreatedAtAction("GetCuenta", new { numeroCuenta = cuenta.NumeroCuenta }, cuenta);
             }
             return BadRequest(rta.Message);
         }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ICuenta } from './cuenta.component';
+import { ICuenta, ICuentaVista } from './cuenta.component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,10 @@ export class CuentaService {
   getCuenta(id: number): Observable<ICuenta> {
     return this.http.get<ICuenta>(this.apiURL + '/' + id);
   }
-  createCliente(cuenta: ICuenta): Observable<ICuenta> {
+  getCuentaBuscada(id: number): Observable<ICuentaVista[]> {
+    return this.http.get<ICuentaVista[]>(this.apiURL + '/GetCuentaBuscada/' + id);
+  }
+  createCuenta(cuenta: ICuenta): Observable<ICuenta> {
     return this.http.post<ICuenta>(this.apiURL, cuenta)
       .pipe(
         tap(() => {
@@ -28,5 +31,12 @@ export class CuentaService {
         })
       );
   }
+  transaccionDeposito(cuenta: ICuentaVista): Observable<ICuentaVista> {
+    return this.http.put<ICuentaVista>(this.apiURL + '/PutDeposito/' + cuenta.numeroCuenta, cuenta);
+  }
+  transaccionRetiro(cuenta: ICuentaVista): Observable<ICuentaVista> {
+    return this.http.put<ICuentaVista>(this.apiURL + '/PutRetiro/' + cuenta.numeroCuenta, cuenta);
+  }
+
   
 }

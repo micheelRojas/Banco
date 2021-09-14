@@ -17,7 +17,7 @@ namespace BackEnd.Cuenta.Aplicacion.Service
         }
         public TransaccionResponse Ejecutar(DepositoRequest request)
         {
-            Dominio.Cuenta cuenta = _unitOfWork.CuentaServiceRepository.FindFirstOrDefault(t => t.Id == request.id);
+            Dominio.Cuenta cuenta = _unitOfWork.CuentaServiceRepository.FindFirstOrDefault(t => t.NumeroCuenta == request.NumeroCuenta);
             if (cuenta == null)
             {
                 return new TransaccionResponse($"Cuenta no existe");
@@ -26,6 +26,7 @@ namespace BackEnd.Cuenta.Aplicacion.Service
             {
                 cuenta.Saldo = request.Transaccion(cuenta.Saldo, request.Valor);
                 _unitOfWork.CuentaServiceRepository.Edit(cuenta);
+                _unitOfWork.Commit();
                 return new TransaccionResponse($"Transaccion Exitosamente");
 
             }

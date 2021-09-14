@@ -1,0 +1,50 @@
+
+<div class="container">
+  <h1>Formulario de Transacion</h1>
+  <p>
+    Numero de Cuenta:<br/>
+    <input type="number" [formControl]="numeroCuentaCtrl" />
+  </p>
+  <button type="button" (click)="buscarCuenta($event)">Buscar</button>
+</div>
+<div class="container">
+  <h1>Cuenta</h1>
+  <div>
+    <p>
+      Tipo de Transaccion:<br />
+      <select name="miselect" [formControl]="tipoCtrl">
+        <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+      </select>
+    </p>
+
+
+
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="transaccion($event)">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="numeroCuenta">Numero Cuenta</label>
+          <input type="text" class="form-control" readonly="readonly" formControlName="numeroCuenta" id="numeroCuenta">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="cliente">cliente</label>
+          <input type="text" readonly="readonly" class="form-control" formControlName="cliente" id="cliente">
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="saldo">Saldo</label>
+          <input type="number" readonly="readonly" class="form-control" formControlName="saldo" id="saldo">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="valor">Valor</label>
+          <input type="number"  class="form-control" formControlName="valor" id="valor">
+        </div>
+      </div>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid">
+        Aceptar
+      </button>
+  </form>
+</div>

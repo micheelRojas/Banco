@@ -24,6 +24,7 @@ import { CuentaComponent } from './cuenta/cuenta.component';
 import { FormCuentaComponent } from './cuenta/form-cuenta/form-cuenta.component';
 import { ListCuentaComponent } from './cuenta/list-cuenta/list-cuenta.component';
 import { CuentaService } from './cuenta/cuenta.service';
+import { TransaccionComponent } from './cuenta/transaccion/transaccion.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { CuentaService } from './cuenta/cuenta.service';
     ListClienteComponent,
     CuentaComponent,
     FormCuentaComponent,
-    ListCuentaComponent
+    ListCuentaComponent,
+    TransaccionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -53,6 +55,7 @@ import { CuentaService } from './cuenta/cuenta.service';
       { path: 'lista-cliente', component: ClienteComponent },
       { path: 'registrar-cuenta', component: FormCuentaComponent },
       { path: 'lista-cuenta', component: CuentaComponent },
+      { path: 'transaccion', component: TransaccionComponent },
 
     ],),
     BrowserAnimationsModule,

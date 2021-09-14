@@ -17,5 +17,11 @@ export interface ICuenta {
   id: number,
   numeroCuenta: string,
   idCliente: number
-
+}
+export interface ICuentaVista {
+  id: number,
+  numeroCuenta: string,
+  cliente: string,
+  saldo: number,
+  valor: number
 }

@@ -8,7 +8,7 @@ namespace BackEnd.Cuenta.Aplicacion.Request
 {
    public abstract class TransaccionRequest
     {
-        public int id { get; set; }
+        public string NumeroCuenta { get; set; }
         public double Saldo { get; set; }
         public double Valor { get; set; }
         public abstract Double Transaccion(Double saldo,Double valor);

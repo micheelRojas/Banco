@@ -18,7 +18,7 @@ namespace BackEnd.Cuenta.Aplicacion.Service
         }
         public CrearCuentaResponse Ejecutar(CrearCuentaRequest request)
         {
-            var cuenta = _unitOfWork.CuentaServiceRepository.FindFirstOrDefault(t => t.Id == request.id || t.NumeroCuenta == request.NumeroCuenta);
+            var cuenta = _unitOfWork.CuentaServiceRepository.FindFirstOrDefault(t => t.Id == request.id || t.NumeroCuenta == request.NumeroCuenta || t.IdCliente==request.IdCliente);
             if (cuenta != null)
             {
                 return new CrearCuentaResponse($"Cuenta ya existe");
